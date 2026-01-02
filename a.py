@@ -11,7 +11,7 @@ class Request:
         self.domain = domain
         self.sub = subdomain
         if not self.sub:
-            raise SubError(fg.RED + "[!]An Error has occured!") + fg.RESET
+            raise SubError(fg.RED + "[!]An Error has occured!")
 
     def __URLBuilder(self):
         base = f"http://{self.sub}.{self.domain}"
@@ -24,14 +24,11 @@ class Request:
         return base
 
     def get_req(self, header: dict = None, Timeout: int = 1):
-        try:
-            if not header:
-                header = HeadFormat()
-            url = self.__URLBuilder()
-            res = requests.get(url, headers=header, timeout=Timeout)
-            return res.status_code
-        except requests.exceptions.RequestException as e:
-            return fg.RED + "[!] An Error has occured: " + str(e) + fg.RESET
+        if not header:
+            header = HeadFormat()
+        url = self.__URLBuilder()
+        res = requests.get(url, headers=header, timeout=Timeout)
+        return res.status_code
 
     def Validate(self, nameserver: list = None):
         try:
@@ -42,9 +39,8 @@ class Request:
             res = call.resolve(self.__HostBuilder(), "A")
             return res.response
         except DNSException as e:
-            return fg.RED + "[!] An Error has occured: " + str(e) + fg.RESET
+            return e
 
 
-d = Request("google.com", "mail")
+d = Request("trexmine.com", "api")
 print(d.get_req())
-

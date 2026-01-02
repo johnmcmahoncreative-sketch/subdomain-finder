@@ -11,7 +11,8 @@ MAC_VERSIONS = ["13_6", "14_0", "14_1"]
 ANDROID_VERSIONS = ["11", "12", "13", "14"]
 IOS_VERSIONS = ["16_6", "17_0", "17_1"]
 
-class UA():
+
+class UA:
     def windows_chrome(self):
         return (
             f"Mozilla/5.0 (Windows NT {random.choice(WINDOWS_VERSIONS)}; Win64; x64) "
@@ -43,10 +44,7 @@ class UA():
 
     def linux_firefox(self):
         v = random.choice(FIREFOX_VERSIONS)
-        return (
-            f"Mozilla/5.0 (X11; Linux x86_64; rv:{v}) "
-            f"Gecko/20100101 Firefox/{v}"
-        )
+        return f"Mozilla/5.0 (X11; Linux x86_64; rv:{v}) " f"Gecko/20100101 Firefox/{v}"
 
     def mac_safari(self):
         return (
@@ -84,7 +82,10 @@ class UA():
             "AppleWebKit/605.1.15 (KHTML, like Gecko) "
             "FxiOS/120.0 Mobile/15E148 Safari/605.1.15"
         )
-    def ua(self,):
+
+    def ua(
+        self,
+    ):
         generators = [
             self.windows_chrome,
             self.windows_edge,
@@ -95,16 +96,17 @@ class UA():
             self.mac_safari,
             self.android_chrome,
             self.ios_safari,
-            self.ios_firefox
+            self.ios_firefox,
         ]
         return random.choice(generators)()
+
+
 ua_gen = UA()
 header = {
-    "Host":"",
-    "User-Agent":f"{ua_gen.ua()}",
+    "Host": "",
+    "User-Agent": f"{ua_gen.ua()}",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
     "Connection": "keep-alive",
 }
-
