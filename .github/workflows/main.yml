@@ -17,4 +17,4 @@ jobs:
 
       - name: Run detector
         run: |
-          python src/os_detector.py
+          python src/Reader.py
