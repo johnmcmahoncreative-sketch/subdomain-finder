@@ -17,6 +17,9 @@ jobs:
       - name: install request
         run: |
            pip install requests
+      - name: install dns
+        run: |
+           pip install dnspython
       - name: Run detector
         run: |
           python main.py
