@@ -14,9 +14,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: install rich
+      - name: install request
         run: |
-           pip install rich
+           pip install requests
       - name: Run detector
         run: |
           python main.py
