@@ -17,4 +17,4 @@ jobs:
 
       - name: Run detector
         run: |
-          python src/Reader.py
+          python main.py
