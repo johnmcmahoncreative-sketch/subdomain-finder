@@ -1,6 +1,5 @@
 import requests
 from dns.resolver import Resolver as dr
-from src.Reader import HeadFormat
 from src.utils.errors import SubError
 from src.utils.colors import fg
 from dns.exception import DNSException
@@ -25,10 +24,8 @@ class Request:
 
     def get_req(self, header: dict|None = None, Timeout: int = 10):
         try:
-            # if not header:
-            #     header = HeadFormat()
             url = self.__URLBuilder()
-            res = requests.get(url, timeout=Timeout)
+            res = requests.get(url,headers=header, timeout=Timeout)
             return res.status_code
         except requests.exceptions.RequestException as e:
             return fg.RED + "[!] An Error has occured: " + str(e) + fg.RESET
@@ -49,5 +46,3 @@ class Request:
             return True
         except socket.gaierror:
             return False
-    # def close(self):
-    #     self.get_req().

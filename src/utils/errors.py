@@ -1,3 +1,4 @@
+
 class SubError(Exception):
     pass
 
