@@ -1,10 +1,10 @@
 import requests
 from dns.resolver import Resolver as dr
 from src.Reader import HeadFormat
-from .utils.errors import SubError
-from .utils.colors import fg
+from src.utils.errors import SubError
+from src.utils.colors import fg
 from dns.exception import DNSException
-
+import socket
 
 class Request:
     def __init__(self, domain: str, subdomain):
@@ -23,17 +23,17 @@ class Request:
             base = f"{self.domain}"
         return base
 
-    def get_req(self, header: dict = None, Timeout: int = 10):
+    def get_req(self, header: dict|None = None, Timeout: int = 10):
         try:
-            if not header:
-                header = HeadFormat()
+            # if not header:
+            #     header = HeadFormat()
             url = self.__URLBuilder()
-            res = requests.get(url, headers=header, timeout=Timeout)
+            res = requests.get(url, timeout=Timeout)
             return res.status_code
         except requests.exceptions.RequestException as e:
             return fg.RED + "[!] An Error has occured: " + str(e) + fg.RESET
 
-    def Validate(self, nameserver: list = None):
+    def Validate(self, nameserver: list|None = None):
         try:
             if nameserver is None:
                 nameserver = ["8.8.8.8"]
@@ -43,3 +43,11 @@ class Request:
             return res
         except DNSException as e:
             return fg.RED + "[!] An Error has occured: " + str(e) + fg.RESET
+    def exists(self):
+        try:
+            sock = socket.gethostbyname(self.__HostBuilder())
+            return True
+        except socket.gaierror:
+            return False
+    # def close(self):
+    #     self.get_req().

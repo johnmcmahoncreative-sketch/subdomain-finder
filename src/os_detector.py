@@ -1,6 +1,6 @@
 import platform
-from utils.errors import OSDetectErr
-from utils.colors import fg
+from src.utils.errors import OSDetectErr
+from src.utils.colors import fg
 
 
 def Detect():
@@ -13,5 +13,3 @@ def Detect():
         return "Mac"
     else:
         raise OSDetectErr(fg.RED + "[!]Invalid OS Detected")
-
-print(Detect())
