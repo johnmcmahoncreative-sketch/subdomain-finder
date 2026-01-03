@@ -1,10 +1,11 @@
 import requests
 from dns.resolver import Resolver as dr
-from Reader import HeadFormat
-from utils.errors import SubError
-from utils.colors import fg
-from header_gen import header
+from src.Reader import HeadFormat
+from src.utils.errors import SubError
+from src.utils.colors import fg
+from src.header_gen import header
 from dns.exception import DNSException
+
 
 class Request:
     def __init__(self, domain: str, subdomain):
@@ -23,14 +24,14 @@ class Request:
             base = f"{self.domain}"
         return base
 
-    def get_req(self, header: dict = None, Timeout: int = 1):
+    def get_req(self, header: dict | None = None, Timeout: int = 1):
         if not header:
             header = HeadFormat()
         url = self.__URLBuilder()
         res = requests.get(url, headers=header, timeout=Timeout)
         return res.status_code
 
-    def Validate(self, nameserver: list = None):
+    def Validate(self, nameserver: list | None = None):
         try:
             if nameserver is None:
                 nameserver = ["8.8.8.8"]

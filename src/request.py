@@ -6,12 +6,13 @@ from utils.colors import fg
 from header_gen import header
 from dns.exception import DNSException
 
+
 class Request:
     def __init__(self, domain: str, subdomain):
         self.domain = domain
         self.sub = subdomain
         if not self.sub:
-            raise SubError(fg.RED + "[!]An Error has occured!") + fg.RESET
+            raise SubError(fg.RED + "[!]An Error has occured!" + fg.RESET)
 
     def __URLBuilder(self):
         base = f"http://{self.sub}.{self.domain}"
@@ -23,7 +24,7 @@ class Request:
             base = f"{self.domain}"
         return base
 
-    def get_req(self, header: dict = None, Timeout: int = 1):
+    def get_req(self, header: dict | None = None, Timeout: int = 1):
         try:
             if not header:
                 header = HeadFormat()
@@ -33,7 +34,7 @@ class Request:
         except requests.exceptions.RequestException as e:
             return fg.RED + "[!] An Error has occured: " + str(e) + fg.RESET
 
-    def Validate(self, nameserver: list = None):
+    def Validate(self, nameserver: list | None = None):
         try:
             if nameserver is None:
                 nameserver = ["8.8.8.8"]
@@ -47,4 +48,3 @@ class Request:
 
 d = Request("google.com", "mail")
 print(d.get_req())
-
