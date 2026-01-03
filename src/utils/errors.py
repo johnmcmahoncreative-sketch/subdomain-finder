@@ -4,3 +4,4 @@ class SubError(Exception):
 
 class OSDetectErr(Exception):
     pass
+

@@ -1,10 +1,10 @@
 import requests
 from dns.resolver import Resolver as dr
-from Reader import HeadFormat
-from utils.errors import SubError
-from utils.colors import fg
-from header_gen import header
+from src.Reader import HeadFormat
+from .utils.errors import SubError
+from .utils.colors import fg
 from dns.exception import DNSException
+
 
 class Request:
     def __init__(self, domain: str, subdomain):
@@ -23,7 +23,7 @@ class Request:
             base = f"{self.domain}"
         return base
 
-    def get_req(self, header: dict = None, Timeout: int = 1):
+    def get_req(self, header: dict = None, Timeout: int = 10):
         try:
             if not header:
                 header = HeadFormat()
@@ -40,11 +40,6 @@ class Request:
             call = dr()
             call.nameservers = nameserver
             res = call.resolve(self.__HostBuilder(), "A")
-            return res.response
+            return res
         except DNSException as e:
             return fg.RED + "[!] An Error has occured: " + str(e) + fg.RESET
-
-
-d = Request("google.com", "mail")
-print(d.get_req())
-

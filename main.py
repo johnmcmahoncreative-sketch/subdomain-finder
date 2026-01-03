@@ -1,11 +1,22 @@
+from src.Reader import SubReader
 from src.request import Request
-import argparse
+from requests.exceptions import RequestException
 
-it = input("[+]Typein The Target Domain:")
-sub = input(
-    "[+]Typein The subdomain file name\n(if you dont have a subdomain file, there is a Default file in program):"
-)
+def Req(domain, headfile=None, timeout=10):
+    for sub in SubReader():
+        sub = sub.strip()  # Remove whitespace/newlines
+        if not sub:
+            continue
+        try:
+            call = Request(domain=domain, subdomain=sub)
+            response = call.get_req(header=headfile, timeout=timeout)
+            if response:
+                return response
+        except RequestException as err:
+            print(f"[!] Could not reach {sub}.{domain}: {err}")
+            continue
+    return None
 
-
-def Req():
-    pass
+# Test
+result = Req("trexmine.com")
+print(result)

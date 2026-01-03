@@ -1,2 +1,2 @@
-from utils import errors
-from utils import colors
+from src.utils import errors
+from src.utils import colors
