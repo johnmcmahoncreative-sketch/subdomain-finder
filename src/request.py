@@ -18,8 +18,6 @@ class Request:
 
     def __HostBuilder(self):
         base = f"{self.sub}.{self.domain}"
-        if self.sub is None:
-            base = f"{self.domain}"
         return base
 
     def get_req(self, header: dict|None = None, Timeout: int = 10):
@@ -37,7 +35,7 @@ class Request:
             call = dr()
             call.nameservers = nameserver
             res = call.resolve(self.__HostBuilder(), "A")
-            return res
+            return res.response
         except DNSException as e:
             return fg.RED + "[!] An Error has occured: " + str(e) + fg.RESET
     def exists(self):
